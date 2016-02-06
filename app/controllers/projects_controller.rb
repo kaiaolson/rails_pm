@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
       flash[:notice] = "Project created successfully!"
     else
       render :new
-      flash[:alert] = "Project creation unsuccessful, please see errors below."
+      flash[:notice] = "Project creation unsuccessful, please see errors."
     end
   end
 

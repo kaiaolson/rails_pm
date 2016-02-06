@@ -1,2 +1,5 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<h1><%= @task.title%></h1>
+<p><%= @task.due_date %></p>
+
+<%= link_to "Edit", edit_task_path(@task) %> |
+<%= link_to "Delete", task_path(@task), method: :delete, data: {confirm: "Are you sure you want to delete this task?"} %>

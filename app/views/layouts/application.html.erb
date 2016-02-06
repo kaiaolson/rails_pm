@@ -7,8 +7,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= notice || alert %>
-  <hr>
   <%= link_to "Home", home_path %> |
   <%= link_to "About", about_path %> |
   <%= link_to "All Projects", projects_path %> |
@@ -21,6 +19,7 @@
   <%= link_to "New Comment", new_comment_path %>
 
 <%= yield %>
-
+<hr>
+<%= notice || alert %>
 </body>
 </html>

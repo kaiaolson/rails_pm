@@ -1,2 +1,6 @@
-<h1>Comments#index</h1>
-<p>Find me in app/views/comments/index.html.erb</p>
+<h1>All Comments</h1>
+
+<% @comments.each do |comm| %>
+  <p><%= comm.body_snippet %></p>
+  <p><%= link_to "View Comment", comment_path(comm) %></p>
+<% end %>
