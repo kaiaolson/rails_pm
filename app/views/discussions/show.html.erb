@@ -1,0 +1,5 @@
+<h1><%= @discussion.title%></h1>
+<p><%= @discussion.description %></p>
+
+<%= link_to "Edit", edit_discussion_path(@discussion) %> |
+<%= link_to "Delete", discussion_path(@discussion), method: :delete, data: {confirm: "Are you sure you want to delete this discussion?"} %>
