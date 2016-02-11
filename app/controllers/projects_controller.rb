@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :find_project, only: [:show, :edit, :update, :destroy]
 
   def index
-    @projects = Project.all
+    @projects = Project.page params[:page]
   end
 
   def new
@@ -33,6 +33,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @task = Task.new
   end
 
   def destroy

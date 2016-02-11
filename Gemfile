@@ -16,6 +16,9 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'faker'
 gem 'validates_timeliness', '~> 4.0'
+gem 'kaminari'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'table_for_collection'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

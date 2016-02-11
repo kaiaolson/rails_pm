@@ -1,11 +1,17 @@
+<ul>
+  <% @discussion.errors.full_messages.each do |message| %>
+  <li><%= message %></li>
+  <% end %>
+</ul>
+
 <%= form_for @discussion do |f| %>
-  <div>
+  <%= content_tag(:div, class: "form-group") do %>
     <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
-  <div>
+    <%= f.text_field :title, class: "form-control" %>
+  <% end %>
+  <%= content_tag(:div, class: "form-group") do %>
     <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-  <%= f.submit %>
+    <%= f.text_area :description, class: "form-control" %>
+  <% end %>
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>

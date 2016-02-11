@@ -3,3 +3,28 @@
 
 <%= link_to "Edit", edit_discussion_path(@discussion) %> |
 <%= link_to "Delete", discussion_path(@discussion), method: :delete, data: {confirm: "Are you sure you want to delete this discussion?"} %>
+
+<h2>Comments</h2>
+
+<% @discussion.comments.order("created_at DESC").each do |com|%>
+  <%= content_tag(:div) do %>
+    <%= com.body %> |
+    <%= com.created_at.strftime("%B %d, %Y") %>
+    <%= link_to "Edit", edit_comment_path(com) %>
+    <%#= shortcut for path %>
+    <%= link_to "Delete", [@discussion, com],
+                          method: :delete,
+                          style: "text-align: right;",
+                          data: {confirm: "Are you sure?"}%>
+    <hr>
+  <% end %>
+<% end %>
+
+<%= @comment.errors.full_messages.join(", ") %>
+<%= form_for [@discussion, @comment] do |f| %>
+  <%= content_tag(:div, class: "form-group") do %>
+    <%= f.label :body %>
+    <%= f.text_area :body, class: "form-control" %>
+  <% end %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

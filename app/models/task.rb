@@ -1,3 +1,6 @@
 class Task < ActiveRecord::Base
-  validates :title, presence: true, uniqueness: true
+  belongs_to :project
+  paginates_per 10
+
+  validates :title, presence: true, uniqueness: {scope: :project_id}
 end

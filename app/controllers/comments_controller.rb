@@ -6,11 +6,14 @@ class CommentsController < ApplicationController
   end
 
   def create
+    @discussion = Discussion.find params[:discussion_id]
+    comment_params = params.require(:comment).permit(:body)
     @comment = Comment.new comment_params
+    @comment.discussion_id = @discussion.id
     if @comment.save
-      redirect_to comment_path(@comment), notice: "Comment created successfully!"
+      redirect_to discussion_path(@discussion), notice: "Comment created!"
     else
-      render :new, notice: "Comment not created!"
+      render "/discussions/show", alert: "Comment not created!"
     end
   end
 
@@ -26,7 +29,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update comment_params
-      redirect_to comment_path(@comment), notice: "Comment updated successfully."
+      redirect_to discussion_path(@comment.discussion_id), notice: "Comment updated successfully."
     else
       render :edit, notice: "Comment not updated!"
     end

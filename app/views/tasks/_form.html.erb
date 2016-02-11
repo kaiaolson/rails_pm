@@ -1,11 +1,17 @@
+<ul>
+  <% @task.errors.full_messages.each do |message| %>
+  <li><%= message %></li>
+  <% end %>
+</ul>
+
 <%= form_for @task do |f| %>
-  <div>
+  <%= content_tag(:div, class: "form-group") do %>
     <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
-  <div>
+    <%= f.text_field :title, class: "form-control" %>
+  <% end %>
+  <%= content_tag(:div, class: "form-group") do %>
     <%= f.label :due_date %>
-    <%= f.text_field :due_date %>
-  </div>
-  <%= f.submit %>
+    <%= f.text_field :due_date, class: "form-control" %>
+  <% end %>
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>
