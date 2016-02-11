@@ -10,11 +10,14 @@ class DiscussionsController < ApplicationController
   end
 
   def create
+    @project = Project.find params[:project_id]
+    discussion_params = params.require(:discussion).permit(:title, :description)
     @discussion = Discussion.new discussion_params
+    @discussion.project_id = @project.id
     if @discussion.save
-      redirect_to discussion_path(@discussion), notice: "Discussion created successfully!"
+      redirect_to project_path(@project), notice: "Discussion created successfully!"
     else
-      render :new, notice: "Discussion creation unsuccessful, please see errors below."
+      render "/projects/show", notice: "Discussion creation unsuccessful, please see errors below."
     end
   end
 

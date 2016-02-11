@@ -34,6 +34,7 @@ class ProjectsController < ApplicationController
 
   def show
     @task = Task.new
+    @discussion = Discussion.new
   end
 
   def destroy

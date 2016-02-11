@@ -5,13 +5,16 @@ Rails.application.routes.draw do
   get "/projects/index/:page" => "projects#index"
 
   resources :tasks
+  resources :comments
+  resources :discussions
+  resources :projects do
+    resources :tasks, only: [:create, :destroy, :show]
+    resources :discussions, only: [:create, :destroy, :show]
+  end
   resources :discussions do
     resources :comments, only: [:create, :destroy, :show]
   end
-  resources :projects do
-    resources :tasks, only: [:create, :destroy, :show]
-  end
-  resources :comments
+
 
   root "home#index"
 end
