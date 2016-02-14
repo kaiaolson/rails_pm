@@ -15,6 +15,13 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy, :show]
   end
 
+  resources :users, only: [:new, :create, :edit, :update, :show] do
+    get "/change_password" => "users#change_password"
+  end
+  resources :sessions, only: [:new, :create, :destroy] do
+    delete :destroy, on: :collection
+  end
+
 
   root "home#index"
 end

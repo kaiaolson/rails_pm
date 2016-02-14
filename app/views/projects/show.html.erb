@@ -49,6 +49,7 @@
   <% end %>
 <% end %>
 
+
 <h3>Completed</h3>
 <%= table_for @project.tasks.where(status: "Done").order("due_date DESC"), :html => {:class => "table table-striped table-bordered"} do -%>
   <% column :title %>
