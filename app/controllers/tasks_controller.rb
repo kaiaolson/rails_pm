@@ -39,7 +39,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to post_path(params[:post_id]), notice: "Task deleted!"
+    redirect_to project_path(params[:project_id]), notice: "Task deleted!"
   end
 
   private

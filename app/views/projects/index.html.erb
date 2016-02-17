@@ -1,7 +1,14 @@
 <h1>All Projects</h1>
 
+<% if user_signed_in? %>
+<div class="btn-group">
+  <button class="btn btn-default"><%= link_to "All Projects", {all: "all", method: :post} %></button>
+  <button class="btn btn-default"><%= link_to "My Projects", {all: "user", method: :post}%></button>
+</div>
+<% end %>
+
 <% @projects.each do |proj| %>
   <h3><%= link_to "#{proj.title}", project_path(proj) %></h3>
 <% end %>
 
-<%= paginate @projects %>
+<div class="text-center"><%= paginate @projects, theme: 'bootstrap3' %></div>

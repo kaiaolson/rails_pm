@@ -1,8 +1,19 @@
 class ProjectsController < ApplicationController
   before_action :find_project, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user, except: [:index, :show]
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   def index
-    @projects = Project.page params[:page]
+    if params[:q]
+      session[:q] = params[:q]
+      @projects = Project.search(session[:q]).order(:updated_at).page params[:page]
+    elsif params[:all] == "all"
+      @projects = Project.order(:updated_at).page params[:page]
+    elsif params[:all] == "user"
+      @projects = Project.where(user_id: current_user.id).order(:updated_at).page params[:page]
+    else
+      @projects = Project.order(:updated_at).page params[:page]
+    end
   end
 
   def new
@@ -11,6 +22,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new project_params
+    @project.user_id = current_user.id
     if @project.save
       redirect_to project_path(@project)
       flash[:notice] = "Project created successfully!"
@@ -51,5 +63,11 @@ class ProjectsController < ApplicationController
 
   def find_project
     @project = Project.find params[:id]
+  end
+
+  def authorize_user
+    unless can? :manage, @project
+      redirect_to root_path, alert: "access denied!"
+    end
   end
 end
