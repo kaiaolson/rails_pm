@@ -9,6 +9,7 @@ class TasksController < ApplicationController
     @project = Project.find params[:project_id]
     task_params = params.require(:task).permit(:title, :due_date)
     @task = Task.new task_params
+    @task.user = current_user
     @task.project_id = @project.id
     if @task.save
       redirect_to project_path(@project), notice: "Task created!"
@@ -18,8 +19,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    flip_status if params[:flip]
-    redirect_to project_path(params[:project_id])
   end
 
   def index
@@ -30,11 +29,15 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update task_params
-      redirect_to task_path(@task), notice: "Task updated successfully."
+    @project = Project.find params[:project_id]
+    current_status = @task.status
+    if @task.update(status: !@task.status)
+      TasksMailer.notify_task_owner(@task, current_user).deliver_now unless current_status
+      flash[:notice] = "Task updated successfully."
     else
-      render :edit, notice: "Task not updated!"
+      flash[:alert] = "Task not updated!"
     end
+    redirect_to project_path(@project)
   end
 
   def destroy
@@ -52,14 +55,4 @@ class TasksController < ApplicationController
     @task = Task.find params[:id]
   end
 
-  def flip_status
-    find_task
-    if @task.status == "Not Done"
-      @task.status = "Done"
-      @task.save
-    else
-      @task.status = "Not Done"
-      @task.save
-    end
-  end
 end

@@ -7,10 +7,11 @@ class CommentsController < ApplicationController
 
   def create
     @discussion = Discussion.find params[:discussion_id]
-    comment_params = params.require(:comment).permit(:body)
     @comment = Comment.new comment_params
-    @comment.discussion_id = @discussion.id
+    @comment.discussion = @discussion
+    @comment.user = current_user
     if @comment.save
+      CommentsMailer.notify_discussion_owner(@comment).deliver_now
       redirect_to discussion_path(@discussion), notice: "Comment created!"
     else
       render "/discussions/show", alert: "Comment not created!"
@@ -36,8 +37,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @discussion = Discussion.find params[:discussion_id]
     @comment.destroy
-    redirect_to comments_path
+    redirect_to discussion_path(@discussion)
     flash[:alert] = "Comment deleted!"
   end
 

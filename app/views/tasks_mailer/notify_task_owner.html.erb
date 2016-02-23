@@ -1,0 +1,8 @@
+<p>Hello <%= @task.user.full_name %>!</p>
+
+<p><%= @second_user.full_name %> has completed your task, <%= @task.title %>.</p>
+
+<p>Click <%= link_to "here", project_url(@task.project) %> to view the project.</p>
+
+<p>Regards,</p>
+<p>Rails PM Team</p>

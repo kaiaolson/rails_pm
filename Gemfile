@@ -21,6 +21,9 @@ gem 'bootstrap-kaminari-views'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'table_for_collection'
 gem 'cancancan'
+gem 'font-awesome-rails'
+gem 'delayed_job_active_record'
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

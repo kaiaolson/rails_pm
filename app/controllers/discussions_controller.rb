@@ -13,7 +13,8 @@ class DiscussionsController < ApplicationController
     @project = Project.find params[:project_id]
     discussion_params = params.require(:discussion).permit(:title, :description)
     @discussion = Discussion.new discussion_params
-    @discussion.project_id = @project.id
+    @discussion.project = @project
+    @discussion.user = current_user
     if @discussion.save
       redirect_to project_path(@project), notice: "Discussion created successfully!"
     else

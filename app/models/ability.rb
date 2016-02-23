@@ -22,6 +22,10 @@ class Ability
     can :manage, Discussion do |discussion|
       discussion.user == user
     end
+
+    # can :manage, Favorite do |favorite|
+    #
+    # end
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.

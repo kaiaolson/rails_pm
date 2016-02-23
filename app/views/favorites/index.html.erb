@@ -1,0 +1,7 @@
+<h1>Favorite Projects</h1>
+
+<% @projects.each do |proj| %>
+  <h3><%= link_to "#{proj.title}", project_path(proj) %></h3>
+<% end %>
+
+<div class="text-center"><%= paginate @projects, theme: 'bootstrap3' %></div>
