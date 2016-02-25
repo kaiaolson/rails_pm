@@ -7,7 +7,6 @@ class TasksController < ApplicationController
 
   def create
     @project = Project.find params[:project_id]
-    task_params = params.require(:task).permit(:title, :due_date)
     @task = Task.new task_params
     @task.user = current_user
     @task.project_id = @project.id
@@ -32,7 +31,7 @@ class TasksController < ApplicationController
     @project = Project.find params[:project_id]
     current_status = @task.status
     if @task.update(status: !@task.status)
-      TasksMailer.notify_task_owner(@task, current_user).deliver_now unless current_status
+      TasksMailer.notify_task_owner(@task, current_user).deliver_later unless current_status
       flash[:notice] = "Task updated successfully."
     else
       flash[:alert] = "Task not updated!"
@@ -48,7 +47,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :due_date, :status)
+    params.require(:task).permit(:title, :due_date)
   end
 
   def find_task

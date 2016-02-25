@@ -1,0 +1,20 @@
+<p>Hello <%= @user.full_name %>,</p>
+
+<p>Here are tasks created today for <%= @project.title %></p>
+<ul>
+  <% @tasks.each do |task| %>
+    <li><%= task.title %></li>
+  <% end %>
+</ul>
+
+<p>Here are discussions created today for <%= @project.title %></p>
+<ul>
+  <% @discussions.each do |discussion| %>
+    <li><%= discussion.title %></li>
+  <% end %>
+</ul>
+
+<%= link_to "View Project", project_url(@project) %>
+
+<p>Regards,</p>
+<p>The Rails PM Tool Team</p>

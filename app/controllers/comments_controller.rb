@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     @comment.discussion = @discussion
     @comment.user = current_user
     if @comment.save
-      CommentsMailer.notify_discussion_owner(@comment).deliver_now
+      CommentsMailer.notify_discussion_owner(@comment).deliver_later
       redirect_to discussion_path(@discussion), notice: "Comment created!"
     else
       render "/discussions/show", alert: "Comment not created!"

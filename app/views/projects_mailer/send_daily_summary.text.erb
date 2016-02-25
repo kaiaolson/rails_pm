@@ -1,0 +1,16 @@
+Hello <%= @user.full_name %>,
+
+Here are tasks created today for <%= @project.title %>
+  <% @tasks.each do |task| %>
+    <%= task.title %>
+  <% end %>
+
+Here are discussions created today for <%= @project.title %>
+  <% @discussions.each do |discussion| %>
+    <%= discussion.title %>
+  <% end %>
+
+<%= link_to "View Project", project_url(@project) %>
+
+Regards,
+The Rails PM Tool Team
