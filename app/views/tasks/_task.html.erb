@@ -5,6 +5,7 @@
   <td><%= task.updated_at.strftime("%B %d, %Y") %></td>
   <td><%= link_to "Delete", project_task_path(task.project_id, task.id),
                            method: :delete,
+                           remote: true,
                            data: {confirm: "Are you sure?"}%>
   </td>
   <td><%= link_to task.status_string, project_task_path(task.project_id, task.id), method: :patch, remote: true, class: "status"  %></td>
