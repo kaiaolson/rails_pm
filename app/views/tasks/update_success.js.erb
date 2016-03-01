@@ -1,0 +1,7 @@
+<% if @task.status %>
+$("#<%= dom_id(@task) %> a.status").html("<%= @task.status_string %>");
+  $("#<%= dom_id(@task) %>").remove().appendTo($("#completed_tasks"));
+<% else %>
+$("#<%= dom_id(@task) %> a.status").html("<%= @task.status_string %>");
+  $("#<%= dom_id(@task) %>").remove().appendTo($("#incomplete_tasks"));
+<% end %>

@@ -23,65 +23,16 @@
 <hr>
 
 <%= content_tag(:div, class: "col-sm-6") do %>
+
 <h2>Tasks</h2>
 
-<% if @project.tasks.where(status: false).empty? %>
-<% else %>
-<h3>Incomplete</h3>
+<div class="tasks">
+  <%= render "/tasks/tasks" %>
+</div>
 
-<!-- tasks display not done -->
-<%= table_for @project.tasks.where(status: false).order("due_date DESC"), :html => {:class => "table table-striped table-bordered"} do -%>
-  <% column :title %>
-  <% column :due_date, :time_format => "%B %d, %Y" %>
-  <% column :created_at, :time_format => "%B %d, %Y" %>
-  <% column :updated_at, :time_format => "%B %d, %Y" %>
-  <% column :title => "Actions" do |task| %>
-    <% link_to("Delete", project_task_path(task.project_id, task.id), method: :delete, data: {confirm: "Are you sure?"})%>
-  <% end %>
-  <% column :title => "Status" do |task| %>
-    <% link_to task.status_string, project_task_path(task.project_id, task.id), method: :patch %>
-  <% end %>
-<% end %>
-<!-- end of tasks display not done -->
-
-<% end %>
-
-<% if @project.tasks.where(status: true).empty? %>
-<% else %>
-
-<!-- tasks display done -->
-<h3>Completed</h3>
-<%= table_for @project.tasks.where(status: true).order("due_date DESC"), :html => {:class => "table table-striped table-bordered"} do -%>
-  <% column :title %>
-  <% column :due_date, :time_format => "%B %d, %Y" %>
-  <% column :created_at, :time_format => "%B %d, %Y" %>
-  <% column :updated_at, :time_format => "%B %d, %Y" %>
-  <% column :title => "Actions" do |task| %>
-    <% link_to("Delete", project_task_path(task.project_id, task.id), method: :delete, data: {confirm: "Are you sure?"})%>
-  <% end %>
-  <% column :title => "Status" do |task| %>
-    <% link_to task.status_string, project_task_path(task.project_id, task.id), method: :patch  %>
-  <% end %>
-<% end %>
-<!-- end of tasks display done -->
-
-<% end %>
-
-<%= @task.errors.full_messages.join(", ") %>
-
-<!-- beginning of task create form -->
-<%= form_for [@project, @task], :html => {class:"form-inline"} do |f| %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control" %>
-  <% end %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :due_date %>
-    <%= f.text_field :due_date, class: "form-control" %>
-  <% end %>
-  <%= f.submit class: "btn btn-primary" %>
-<% end %>
-<!-- end of task create form -->
+<div id="task-form">
+  <%= render "/tasks/form" %>
+</div>
 
 <% end %>
 

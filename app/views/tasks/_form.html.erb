@@ -1,10 +1,7 @@
-<ul>
-  <% @task.errors.full_messages.each do |message| %>
-  <li><%= message %></li>
-  <% end %>
-</ul>
+<%= @task.errors.full_messages.join(", ") %>
 
-<%= form_for @task do |f| %>
+<!-- beginning of task create form -->
+<%= form_for [@project, @task], :html => {class:"form-inline"}, remote: true do |f| %>
   <%= content_tag(:div, class: "form-group") do %>
     <%= f.label :title %>
     <%= f.text_field :title, class: "form-control" %>
@@ -15,3 +12,4 @@
   <% end %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
+<!-- end of task create form -->

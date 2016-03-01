@@ -10,10 +10,14 @@ class TasksController < ApplicationController
     @task = Task.new task_params
     @task.user = current_user
     @task.project_id = @project.id
-    if @task.save
-      redirect_to project_path(@project), notice: "Task created!"
-    else
-      render "/projects/show", alert: "Task not created!"
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to project_path(@project), notice: "Task created!" }
+        format.js   { render :create_success }
+      else
+        format.html { render "/projects/show", alert: "Task not created!" }
+        format.js   { render :create_failure }
+      end
     end
   end
 
@@ -30,18 +34,27 @@ class TasksController < ApplicationController
   def update
     @project = Project.find params[:project_id]
     current_status = @task.status
-    if @task.update(status: !@task.status)
-      TasksMailer.notify_task_owner(@task, current_user).deliver_later unless current_status
-      flash[:notice] = "Task updated successfully."
-    else
-      flash[:alert] = "Task not updated!"
+    respond_to do |format|
+      if @task.update(status: !@task.status)
+        format.html { # TasksMailer.notify_task_owner(@task, current_user).deliver_later unless current_status
+                      flash[:notice] = "Task updated successfully."
+                      redirect_to project_path(@project) }
+        format.js   { render :update_success }
+      else
+        format.html { flash[:alert] = "Task not updated!"
+                      redirect_to project_path(@project) }
+        format.js   { render :update_failure }
+      end
     end
-    redirect_to project_path(@project)
+
   end
 
   def destroy
     @task.destroy
-    redirect_to project_path(params[:project_id]), notice: "Task deleted!"
+    respond_to do |format|
+      format.html { redirect_to project_path(params[:project_id]), notice: "Task deleted!" }
+      format.js   { render }
+    end
   end
 
   private
