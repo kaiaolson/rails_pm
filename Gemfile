@@ -23,6 +23,7 @@ gem 'table_for_collection'
 gem 'cancancan'
 gem 'font-awesome-rails'
 gem 'delayed_job_active_record'
+gem 'quiet_assets'
 
 
 # Use jquery as the JavaScript library
