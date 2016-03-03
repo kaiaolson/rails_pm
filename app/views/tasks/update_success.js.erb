@@ -1,3 +1,5 @@
+$("#<%= dom_id(@task) %>").replaceWith("<%= j render 'task', task: @task %>")
+
 <% if @task.status %>
 $("#<%= dom_id(@task) %> a.status").html("<%= @task.status_string %>");
   $("#<%= dom_id(@task) %>").remove().appendTo($("#completed_tasks"));

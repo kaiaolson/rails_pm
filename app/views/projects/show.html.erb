@@ -1,6 +1,10 @@
 <h1><%= @project.title%></h1>
 <p><%= @project.description %></p>
-<p><%= @project.due_date %></p>
+<p>Due Date: <%= @project.due_date %></p>
+
+<% @project.files.each do |file| %>
+<p><%= link_to file.file.filename, file.url %></p>
+<% end %>
 
 <% if can? :edit, @project %>
 <%= link_to "Edit", edit_project_path(@project), class: "btn btn-warning" %>

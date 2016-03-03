@@ -1,4 +1,7 @@
 class Project < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :history]
+
   has_many :tasks, dependent: :destroy
   has_many :discussions, dependent: :destroy
   has_many :favorites, dependent: :destroy
@@ -7,6 +10,8 @@ class Project < ActiveRecord::Base
 
   validates :title, presence: true, uniqueness: true, length: {minimum: 10}
   validates_date :due_date, :after => lambda { Date.current }
+
+  mount_uploaders :files, FileUploader
 
   def self.search(term)
     where("title || description ILIKE ?","%#{term}%")

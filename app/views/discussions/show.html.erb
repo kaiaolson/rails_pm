@@ -6,25 +6,12 @@
 
 <h2>Comments</h2>
 
-<% @discussion.comments.order("created_at DESC").each do |com|%>
-  <%= content_tag(:div) do %>
-    <%= com.body %> |
-    <%= com.created_at.strftime("%B %d, %Y") %>
-    <%= link_to "Edit", edit_comment_path(com) %>
-    <%#= shortcut for path %>
-    <%= link_to "Delete", [@discussion, com],
-                          method: :delete,
-                          style: "text-align: right;",
-                          data: {confirm: "Are you sure?"}%>
-    <hr>
+<div id="comments">
+  <% @discussion.comments.order("created_at DESC").each do |comment|%>
+    <%= render "/comments/comment", {discussion: @discussion, comment: comment} %>
   <% end %>
-<% end %>
+</div>
 
-<%= @comment.errors.full_messages.join(", ") %>
-<%= form_for [@discussion, @comment] do |f| %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :body %>
-    <%= f.text_area :body, class: "form-control" %>
-  <% end %>
-  <%= f.submit class: "btn btn-primary" %>
-<% end %>
+<h3>Create Comment</h3>
+
+<%= render "/comments/form", {discussion: @discussion, comment: @comment} %>

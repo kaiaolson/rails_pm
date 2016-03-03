@@ -36,6 +36,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    @project.slug = nil
     if @project.update project_params
       redirect_to project_path(@project), notice: "Project updated successfully!"
     else
@@ -58,11 +59,11 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :description, :due_date)
+    params.require(:project).permit(:title, :description, :due_date, {files: []})
   end
 
   def find_project
-    @project = Project.find params[:id]
+    @project = Project.friendly.find params[:id]
   end
 
   def authorize_user

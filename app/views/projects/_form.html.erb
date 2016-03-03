@@ -4,18 +4,10 @@
   <% end %>
 </ul>
 
-<%= form_for @project do |f| %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control" %>
-  <% end %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :description %>
-    <%= f.text_area :description, class: "form-control" %>
-  <% end %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :due_date %>
-    <%= f.date_field :due_date, class: "form-control", placeholder: "e.g. yyyy-mm-dd" %>
-  <% end %>
+<%= simple_form_for @project do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :due_date %>
+  <%= f.input :files, as: :file, input_html: {multiple: true} %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>

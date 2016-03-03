@@ -10,7 +10,7 @@ class DiscussionsController < ApplicationController
   end
 
   def create
-    @project = Project.find params[:project_id]
+    @project = Project.friendly.find params[:project_id]
     discussion_params = params.require(:discussion).permit(:title, :description)
     @discussion = Discussion.new discussion_params
     @discussion.project = @project

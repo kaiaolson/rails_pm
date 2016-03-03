@@ -24,7 +24,9 @@ gem 'cancancan'
 gem 'font-awesome-rails'
 gem 'delayed_job_active_record'
 gem 'quiet_assets'
-
+gem 'simple_form'
+gem 'friendly_id', '~> 5.1.0'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

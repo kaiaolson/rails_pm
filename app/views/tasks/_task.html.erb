@@ -3,10 +3,11 @@
   <td><%= task.due_date.strftime("%B %d, %Y") %></td>
   <td><%= task.created_at.strftime("%B %d, %Y") %></td>
   <td><%= task.updated_at.strftime("%B %d, %Y") %></td>
-  <td><%= link_to "Delete", project_task_path(task.project_id, task.id),
+  <td><%= link_to "Edit", edit_project_task_path(task.project_id, task), remote: true %>
+      <%= link_to "Delete", project_task_path(task.project_id, task),
                            method: :delete,
                            remote: true,
                            data: {confirm: "Are you sure?"}%>
   </td>
-  <td><%= link_to task.status_string, project_task_path(task.project_id, task.id), method: :patch, remote: true, class: "status"  %></td>
+  <td><%= link_to task.status_string, project_task_path(task.project_id, task, change_status: true), method: :patch, remote: true, class: "status"  %></td>
 </tr>

@@ -4,14 +4,14 @@ Rails.application.routes.draw do
   get "/about" => "home#about"
 
   resources :projects do
-    resources :tasks, only: [:create, :update, :destroy]
+    resources :tasks, only: [:create, :edit, :update, :destroy]
     resources :discussions, only: [:create, :destroy, :show]
     resources :favorites, only: [:create, :destroy]
     get "/advanced_search" => "projects#advanced_search"
   end
 
   resources :discussions, only: [:show, :edit, :update] do
-    resources :comments, only: [:create, :destroy, :show]
+    resources :comments, only: [:edit, :create, :update, :destroy, :show]
   end
 
   resources :users, only: [:new, :create, :edit, :update, :show] do

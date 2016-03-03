@@ -4,14 +4,8 @@
   <% end %>
 </ul>
 
-<%= form_for @discussion do |f| %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control" %>
-  <% end %>
-  <%= content_tag(:div, class: "form-group") do %>
-    <%= f.label :description %>
-    <%= f.text_area :description, class: "form-control" %>
-  <% end %>
+<%= simple_form_for @discussion do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>

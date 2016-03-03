@@ -1,0 +1,1 @@
+$("#<%= dom_id(@comment) %>").replaceWith("<div id='<%= dom_id(@comment) %>'><%= j render 'form', {discussion: @discussion, comment: @comment} %></div>");

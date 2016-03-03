@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @project = Project.find params[:project_id]
+    @project = Project.friendly.find params[:project_id]
     @task = Task.new task_params
     @task.user = current_user
     @task.project_id = @project.id
@@ -29,13 +29,17 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @project = Project.friendly.find params[:project_id]
+    respond_to do |format|
+      format.js { render :edit_task }
+    end
   end
 
   def update
-    @project = Project.find params[:project_id]
-    current_status = @task.status
+    @project = Project.friendly.find params[:project_id]
+    check_change_status
     respond_to do |format|
-      if @task.update(status: !@task.status)
+      if @task.save
         format.html { # TasksMailer.notify_task_owner(@task, current_user).deliver_later unless current_status
                       flash[:notice] = "Task updated successfully."
                       redirect_to project_path(@project) }
@@ -65,6 +69,15 @@ class TasksController < ApplicationController
 
   def find_task
     @task = Task.find params[:id]
+  end
+
+  def check_change_status
+    if params[:change_status]
+      @task.status = !@task.status
+    else
+      @task.title    = params[:task][:title]
+      @task.due_date = params[:task][:due_date]
+    end
   end
 
 end

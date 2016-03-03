@@ -6,7 +6,7 @@ class FavoritesController < ApplicationController
   end
 
   def create
-    project = Project.find params[:project_id]
+    project = Project.friendly.find params[:project_id]
     favorite = Favorite.new(project: project, user: current_user)
     if favorite.save
       redirect_to project, notice: "Project added to favorites!"
@@ -16,7 +16,7 @@ class FavoritesController < ApplicationController
   end
 
   def destroy
-    project = Project.find params[:project_id]
+    project = Project.friendly.find params[:project_id]
     favorite = current_user.favorites.find params[:id]
     favorite.destroy
     redirect_to project, notice: "Project removed from favorites."
