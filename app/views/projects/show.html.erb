@@ -16,6 +16,12 @@
 
 <% if @project.user == current_user %>
 <% else %>
+  <% membership = @project.membership_for current_user %>
+  <% if membership %>
+    <%= link_to "Leave", project_membership_path(@project, membership), method: :delete %>
+  <% else %>
+    <%= link_to "Join", project_memberships_path(@project), method: :post%>
+  <% end %>
   <% favorite = @project.favorite_for current_user %>
   <% if favorite %>
     <%= link_to fa_icon("heart"), project_favorite_path(@project, favorite), method: :delete, class: "fa-icon-link" %>

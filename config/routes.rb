@@ -7,7 +7,12 @@ Rails.application.routes.draw do
     resources :tasks, only: [:create, :edit, :update, :destroy]
     resources :discussions, only: [:create, :destroy, :show]
     resources :favorites, only: [:create, :destroy]
+    resources :memberships, only: [:create, :destroy]
     get "/advanced_search" => "projects#advanced_search"
+  end
+
+  resources :tasks do
+    post :sort, on: :collection
   end
 
   resources :discussions, only: [:show, :edit, :update] do
@@ -25,4 +30,13 @@ Rails.application.routes.draw do
   resources :favorites, only: [:index]
 
   root "home#index"
+
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      resources :projects do
+        resources :discussions
+        resources :tasks
+      end
+    end
+  end
 end

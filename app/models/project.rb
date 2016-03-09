@@ -5,6 +5,8 @@ class Project < ActiveRecord::Base
   has_many :tasks, dependent: :destroy
   has_many :discussions, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :memberships, dependent: :destroy
+  has_many :members, through: :memberships, source: :user
   belongs_to :user
   paginates_per 10
 
@@ -27,5 +29,9 @@ class Project < ActiveRecord::Base
 
   def favorite_for(user)
     favorites.find_by_user_id user
+  end
+
+  def membership_for(user)
+    memberships.find_by_user_id user
   end
 end

@@ -27,6 +27,11 @@ gem 'quiet_assets'
 gem 'simple_form'
 gem 'friendly_id', '~> 5.1.0'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'mini_magick'
+gem 'jquery-ui-rails'
+gem 'capybara'
+gem 'active_model_serializers'
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

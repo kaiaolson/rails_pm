@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303213855) do
+ActiveRecord::Schema.define(version: 20160308235454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,16 @@ ActiveRecord::Schema.define(version: 20160303213855) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "memberships", ["project_id"], name: "index_memberships_on_project_id", using: :btree
+  add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
+
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
@@ -100,6 +110,7 @@ ActiveRecord::Schema.define(version: 20160303213855) do
     t.integer  "project_id"
     t.integer  "user_id"
     t.boolean  "status",     default: false
+    t.integer  "position"
   end
 
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
@@ -113,8 +124,10 @@ ActiveRecord::Schema.define(version: 20160303213855) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.boolean  "admin"
+    t.string   "api_key"
   end
 
+  add_index "users", ["api_key"], name: "index_users_on_api_key", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "comments", "discussions"
@@ -123,6 +136,8 @@ ActiveRecord::Schema.define(version: 20160303213855) do
   add_foreign_key "discussions", "users"
   add_foreign_key "favorites", "projects"
   add_foreign_key "favorites", "users"
+  add_foreign_key "memberships", "projects"
+  add_foreign_key "memberships", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users"

@@ -53,6 +53,13 @@ class TasksController < ApplicationController
 
   end
 
+  def sort
+    params[:task].each_with_index do |id, index|
+      Task.find(id).update!(position: index + 1)
+    end
+    head :ok
+  end
+
   def destroy
     @task.destroy
     respond_to do |format|

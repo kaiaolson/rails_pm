@@ -3,7 +3,7 @@
 
 <h3>Incomplete</h3>
 <!-- tasks display not done -->
-<table width="100%" id="incomplete_tasks" class="table table-striped table-bordered">
+<!-- <table width="100%" id="incomplete_tasks" class="table table-striped table-bordered">
   <thead>
     <tr>
       <th>Title</th>
@@ -16,11 +16,15 @@
   </thead>
 
   <tbody>
-    <% @project.tasks.where(status: false).order("created_at DESC").each do |task| %>
-      <%= render "/tasks/task", task: task %>
-    <% end %>
+
   </tbody>
-</table>
+</table> -->
+
+<ul id="incomplete_tasks">
+  <% @project.tasks.where(status: false).order(:position).each do |task| %>
+    <%= render "/tasks/task", task: task %>
+  <% end %>
+</ul>
 <!-- end of tasks display not done -->
 
 <% end %>
@@ -31,7 +35,7 @@
 <h3>Completed</h3>
 
 <!-- tasks display done -->
-<table width="100%" id="completed_tasks" class="table table-striped table-bordered">
+<!-- <table width="100%" id="completed_tasks" class="table table-striped table-bordered">
   <thead>
     <tr>
       <th>Title</th>
@@ -44,11 +48,15 @@
   </thead>
 
   <tbody>
-    <% @project.tasks.where(status: true).order("created_at DESC").each do |task| %>
-      <%= render "/tasks/task", task: task %>
-    <% end %>
+
   </tbody>
-</table>
+</table> -->
+
+<ul id="completed_tasks" class="list-group">
+  <% @project.tasks.where(status: true).order(:position).each do |task| %>
+    <%= render "/tasks/task", task: task %>
+  <% end %>
+</ul>
 <!-- end of tasks display done -->
 
 <% end %>

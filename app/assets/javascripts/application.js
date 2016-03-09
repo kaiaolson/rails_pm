@@ -14,4 +14,13 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require turbolinks
+//= require jquery-ui
 //= require_tree .
+$(document).ready(function() {
+  $('#incomplete_tasks, #completed_tasks').sortable({
+    update: function() {
+      var ids = $(this).sortable('serialize');
+      $.post('/tasks/sort', ids);
+    }
+  });
+});
