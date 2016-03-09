@@ -31,6 +31,7 @@ gem 'mini_magick'
 gem 'jquery-ui-rails'
 gem 'capybara'
 gem 'active_model_serializers'
+gem 'omniauth-github'
 
 
 # Use jquery as the JavaScript library

@@ -39,4 +39,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get "/auth/github", as: :sign_in_with_github
+  get "/auth/github/callback" => "callbacks#github"
 end
